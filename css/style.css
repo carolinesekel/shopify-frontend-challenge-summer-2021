@@ -1,0 +1,48 @@
+body {
+    padding: 0;
+    margin: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* ------------ container ------------ */
+
+.container {
+    padding: 10px;
+    width: 680px;
+    margin: 0 auto;
+}
+
+.sub-head {
+    font-weight: 400;
+}
+
+
+/* ------------ search ------------ */
+
+.card {
+    padding: 12px;
+    background-color: white;
+    border-radius: 4px;
+    margin: 12px;
+}
+
+label {
+    display: block;
+}
+
+#search {
+    width: calc(100% - 42px);
+}
+
+
+/* ------------ lower half (results and nominations) ------------ */
+
+.results-nominations-section {
+    display: flex;
+}
+
+.results-nominations-section .card {
+    width: 50%;
+}
