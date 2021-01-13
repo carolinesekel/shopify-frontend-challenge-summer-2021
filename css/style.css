@@ -26,6 +26,7 @@ body {
     background-color: white;
     border-radius: 4px;
     margin: 12px;
+    margin-left: 0;
 }
 
 label {
@@ -45,4 +46,8 @@ label {
 
 .results-nominations-section .card {
     width: 50%;
+}
+
+.results-nominations-section p {
+    font-weight: 700;
 }

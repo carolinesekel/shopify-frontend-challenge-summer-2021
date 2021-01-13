@@ -5,6 +5,8 @@ const resultsLabel = document.getElementById("results-label");
 const resultsList = document.getElementById("results-list");
 const nominationsList = document.getElementById("nominations-list");
 
+const searchButton = document.getElementById("searchSubmit");
+const input = document.getElementById("search");
 
 function newSearch(searchTerm) {
     updatedHtml = ' "' + searchTerm + '"';
@@ -29,4 +31,11 @@ function newSearch(searchTerm) {
             // Do something for an error here
         })
 }
-newSearch("Ram");
+//newSearch("Ram");
+searchButton.addEventListener("click", () => {
+    const searchTerm = input.value;
+    if (searchTerm) {
+        newSearch(searchTerm);
+    }
+    input.value = '';
+})
