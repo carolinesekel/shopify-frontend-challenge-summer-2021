@@ -92,6 +92,8 @@ resultsList.addEventListener("click", (event) => {
         //console.log(movieDetails);
         nominate(movieDetails);
     }
+    //disable button after
+    elementClicked.setAttribute("disabled", true);
 })
 
 
@@ -108,3 +110,15 @@ function nominate(movieDetails) {
     //add item to list
     nominationsList.appendChild(nominationItem);
 }
+
+function removeNomination() {
+
+}
+nominationsList.addEventListener("click", (event) => {
+    let elementClicked = event.target;
+    //check if clicked remove button
+    //console.log(elementClicked.classList.value);
+    if (elementClicked.classList.value == "remove-button") {
+        removeNomination();
+    }
+})
