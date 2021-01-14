@@ -106,14 +106,16 @@ function nominate(movieDetails) {
     nominationsList.appendChild(nominationItem);
 }
 
-function removeNomination() {
-
+function removeNomination(nomination) {
+    //remove from list
+    nomination.remove();
+    //restore nominate button in resultsList
 }
 nominationsList.addEventListener("click", (event) => {
     let elementClicked = event.target;
     //check if clicked remove button
     //console.log(elementClicked.classList.value);
     if (elementClicked.classList.value == "remove-button") {
-        removeNomination();
+        removeNomination(elementClicked.parentNode);
     }
 })

@@ -39,6 +39,10 @@ h2 {
     margin-left: 0;
 }
 
+.card p {
+    font-size: 18px;
+}
+
 label {
     display: block;
 }
