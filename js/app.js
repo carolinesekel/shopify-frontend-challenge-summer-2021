@@ -107,9 +107,23 @@ function nominate(movieDetails) {
 }
 
 function removeNomination(nomination) {
+    //console.log(nomination);
+    //console.log(nomination.childNodes[0].textContent);
+    let nominationDetails = nomination.childNodes[0].textContent;
     //remove from list
     nomination.remove();
     //restore nominate button in resultsList
+    //how to get back to resultsList to figure out which button to restore?
+    //note to self: probably could have avoided this by keeping track of the movies a better way, maybe a list of objects?
+    resultsList.childNodes.forEach((li) => {
+        //console.log(li.childNodes[0].textContent);
+        let movieDetails = li.childNodes[0].textContent;
+        if (movieDetails == nominationDetails) {
+            //console.log("this one");
+            //console.log(li.childNodes[1]);
+            li.childNodes[1].toggleAttribute("disabled");
+        }
+    })
 }
 nominationsList.addEventListener("click", (event) => {
     let elementClicked = event.target;
