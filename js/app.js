@@ -1,6 +1,7 @@
 const apiKey = config.MY_KEY;
-let url = "http://www.omdbapi.com/?apikey=" + apiKey + "&s=";
+let url = `http://www.omdbapi.com/?apikey=${apiKey}&s=`;
 
+//ger HTML elements
 const resultsLabel = document.getElementById("results-label");
 const resultsList = document.getElementById("results-list");
 const nominationsList = document.getElementById("nominations-list");
@@ -8,9 +9,13 @@ const nominationsList = document.getElementById("nominations-list");
 const searchButton = document.getElementById("searchSubmit");
 const input = document.getElementById("search");
 
+
 function newSearch(searchTerm) {
-    updatedHtml = ' "' + searchTerm + '"';
-    resultsLabel.insertAdjacentHTML("beforeend", updatedHtml)
+    //update results label with new search term 
+    resultsLabel.textContent = `Results for "${searchTerm}"`;
+    //delete old list if there is one
+    resultsList.innerHTML = '';
+    //fetch data based on search term 
     const finalUrl = url + searchTerm;
     fetch(finalUrl)
         .then((response) => {
@@ -19,10 +24,11 @@ function newSearch(searchTerm) {
         .then((data) => {
             // Work with JSON data here
             console.log(data)
+                //data.Search holds the list of movies, append list item for each movie
             data.Search.forEach((movie) => {
                 console.log(movie.Title)
                 console.log(movie.Year)
-                var resultItem = document.createElement('li');
+                let resultItem = document.createElement('li');
                 resultItem.textContent = `${movie.Title} (${movie.Year})`;
                 resultsList.appendChild(resultItem);
             })
@@ -31,11 +37,33 @@ function newSearch(searchTerm) {
             // Do something for an error here
         })
 }
-//newSearch("Ram");
+//event listener on button to submit search
 searchButton.addEventListener("click", () => {
+    //get input value from search box
     const searchTerm = input.value;
+    //if not empty, run newSearch with submitted search term
     if (searchTerm) {
         newSearch(searchTerm);
     }
+    //clear search box 
     input.value = '';
 })
+
+//event listener on enter key to submit also
+//TODO: way to not repeat this code from first event listener - make function and call in both places?
+document.addEventListener("keyup", (event) => {
+    if (event.keyCode == 13) {
+        //get input value from search box
+        const searchTerm = input.value;
+        //if not empty, run newSearch with submitted search term
+        if (searchTerm) {
+            newSearch(searchTerm);
+        }
+        //clear search box 
+        input.value = '';
+    }
+})
+
+function addNomination() {
+
+}
