@@ -23,13 +23,21 @@ function newSearch(searchTerm) {
         })
         .then((data) => {
             // Work with JSON data here
-            console.log(data)
-                //data.Search holds the list of movies, append list item for each movie
+            console.log(data);
+            //data.Search holds the list of movies, append list item for each movie
             data.Search.forEach((movie) => {
                 console.log(movie.Title)
                 console.log(movie.Year)
+                    //list item for movie
                 let resultItem = document.createElement('li');
-                resultItem.textContent = `${movie.Title} (${movie.Year})`;
+                resultItem.textContent = `${movie.Title} (${movie.Year}) `;
+                //button to nominate
+                const nominateButton = document.createElement('button');
+                nominateButton.classList.add("nominate-button");
+                nominateButton.textContent = "Nominate";
+                console.log(nominateButton);
+                resultItem.appendChild(nominateButton);
+                //add item to list
                 resultsList.appendChild(resultItem);
             })
         })
