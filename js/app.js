@@ -25,7 +25,7 @@ function newSearch(searchTerm) {
         })
         .then((data) => {
             // Work with JSON data here
-            console.log(data);
+            //console.log(data);
             //data.Search holds the list of movies, append list item for each movie
             data.Search.forEach((movie) => {
                 //console.log(movie.Title)
@@ -43,11 +43,6 @@ function newSearch(searchTerm) {
                 resultItem.appendChild(nominateButton);
                 //add item to list
                 resultsList.appendChild(resultItem);
-
-                console.log(`button parent child1 text: ${nominateButton.parentElement.childNodes[0].textContent}`);
-
-                //console.log(`button parent  textcontent: ${nominateButton.parentElement.textContent}`);
-
 
             })
         })
