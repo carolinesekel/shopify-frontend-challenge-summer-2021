@@ -9,8 +9,11 @@ const nominationsList = document.getElementById("nominations-list");
 const searchButton = document.getElementById("searchSubmit");
 const input = document.getElementById("search");
 
-//list of current nominations
+const shareButton = document.getElementById("share");
+
+//number of initial nominations
 let numberOfNumonations = 0;
+
 
 function newSearch(searchTerm) {
     //update results label with new search term 
@@ -25,11 +28,8 @@ function newSearch(searchTerm) {
         })
         .then((data) => {
             // Work with JSON data here
-            //console.log(data);
             //data.Search holds the list of movies, append list item for each movie
             data.Search.forEach((movie) => {
-                //console.log(movie.Title)
-                //console.log(movie.Year)
                 //list item for movie
                 const resultItem = document.createElement('li');
                 const movieDetails = document.createTextNode(`${movie.Title} (${movie.Year}) `);
@@ -39,11 +39,9 @@ function newSearch(searchTerm) {
                 nominateButton.classList.add("nominate-button");
                 const buttonLabel = document.createTextNode("Nominate");
                 nominateButton.appendChild(buttonLabel);
-                //console.log(nominateButton);
                 resultItem.appendChild(nominateButton);
                 //add item to list
                 resultsList.appendChild(resultItem);
-
             })
         })
         .catch((err) => {
@@ -64,7 +62,6 @@ searchButton.addEventListener("click", () => {
 
 //event listener on enter key to submit also
 //TODO: way to not repeat this code from first event listener - make function and call in both places?
-//add to newSearch function? or best to separate working with input from other functionality
 document.addEventListener("keyup", (event) => {
     if (event.keyCode == 13) {
         //get input value from search box
@@ -79,26 +76,24 @@ document.addEventListener("keyup", (event) => {
 })
 
 function nominate(movieDetails) {
+    //list item
     const nominationItem = document.createElement('li');
     const nominationDetails = document.createTextNode(movieDetails);
     nominationItem.appendChild(nominationDetails);
+    //button to remove
     const removeButton = document.createElement('button');
     removeButton.classList.add("remove-button");
     const buttonLabel = document.createTextNode("Remove");
     removeButton.appendChild(buttonLabel);
-    //console.log(nominateButton);
     nominationItem.appendChild(removeButton);
     //add item to list
     nominationsList.appendChild(nominationItem);
     //update numberOfNominations
     numberOfNumonations += 1;
-    console.log(numberOfNumonations);
     checkNumberOfNominations();
 }
 
 function removeNomination(nomination) {
-    //console.log(nomination);
-    //console.log(nomination.childNodes[0].textContent);
     let nominationDetails = nomination.childNodes[0].textContent;
     //remove from list
     nomination.remove();
@@ -106,26 +101,20 @@ function removeNomination(nomination) {
     //how to get back to resultsList to figure out which button to restore?
     //note to self: probably could have avoided this by keeping track of the movies a better way, maybe a list of objects?
     resultsList.childNodes.forEach((li) => {
-            //console.log(li.childNodes[0].textContent);
-            let movieDetails = li.childNodes[0].textContent;
-            if (movieDetails == nominationDetails) {
-                //console.log("this one");
-                //console.log(li.childNodes[1]);
-                li.childNodes[1].toggleAttribute("disabled");
-            }
-        })
-        //update numberOfNominations
+        let movieDetails = li.childNodes[0].textContent;
+        if (movieDetails == nominationDetails) {
+            li.childNodes[1].toggleAttribute("disabled");
+        }
+    });
+    //update numberOfNominations
     numberOfNumonations -= 1;
-    console.log(numberOfNumonations);
     checkNumberOfNominations();
 }
 resultsList.addEventListener("click", (event) => {
     let elementClicked = event.target;
     //check if clicked nominate button
-    //console.log(elementClicked.classList.value);
     if (elementClicked.classList.value == "nominate-button") {
         const movieDetails = `${elementClicked.parentElement.childNodes[0].textContent}`;
-        //console.log(movieDetails);
         nominate(movieDetails);
     }
     //disable button after
@@ -136,16 +125,24 @@ resultsList.addEventListener("click", (event) => {
 nominationsList.addEventListener("click", (event) => {
     let elementClicked = event.target;
     //check if clicked remove button
-    //console.log(elementClicked.classList.value);
     if (elementClicked.classList.value == "remove-button") {
         removeNomination(elementClicked.parentNode);
     }
 })
 
 function checkNumberOfNominations() {
-    if (numberOfNumonations < 5 || numberOfNumonations > 5) {
+    if (numberOfNumonations < 5) {
         document.body.classList.remove("full-nominations");
-    } else {
+    } else if (numberOfNumonations >= 5) {
         document.body.classList.add("full-nominations");
+        /*resultsList.childNodes.forEach((li) => {
+            li.childNodes[1].setAttribute("disabled", true);
+        })*/
     }
+}
+
+//send email with nominations and link to page
+function shareNominations() {
+    //mailto link 
+    //window.open('')
 }
