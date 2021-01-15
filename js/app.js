@@ -1,5 +1,6 @@
-const apiKey = config.MY_KEY;
-let url = `http://www.omdbapi.com/?apikey=${apiKey}&s=`;
+//const apiKey = config.MY_KEY;
+//let url = `http://www.omdbapi.com/?apikey=${apiKey}&s=`;
+let url = `http://www.omdbapi.com/?apikey=5bc46a90&s=`;
 
 //get HTML elements
 const resultsLabel = document.getElementById("results-label");
