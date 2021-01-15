@@ -156,7 +156,13 @@ function shareNominations() {
     console.log(nominations);
     //top 5 into string to insert into mailto link
     let nominationsString = "";
-    for (let i = 0; i < 5; i++) {
+    let lengthOrFive;
+    if (nominations.length < 5) {
+        lengthOrFive = nominations.length;
+    } else {
+        lengthOrFive = 5;
+    }
+    for (let i = 0; i < lengthOrFive; i++) {
         nominationsString += `${nominations[i]}%0D%0A`
     }
     console.log(nominationsString);
@@ -171,6 +177,6 @@ function shareNominations() {
     }
     console.log(stringNoSpaces);
     //mailto link 
-    window.open(`mailto:?subject=Check%20out%20my%20nominations%20for%20the%20Shoppies!&body=I%20nominated%20my%20favorite%20movies%20for%20the%20Shoppies%3A%20Movie%20awards%20for%20entrepreneurs!%0D%0A%0D%0AMy%20top%205%20movies%20were%3A%0D%0A${stringNoSpaces}%0D%0ANominate%20your%20favorites%20at%20%20https%3A%2F%2Fcarolinesekel.github.io%2Fshopify-frontend-challenge-summer-2021%2F!`)
+    window.open(`mailto:?subject=Check%20out%20my%20nominations%20for%20the%20Shoppies!&body=I%20nominated%20my%20favorite%20movies%20for%20the%20Shoppies%3A%20Movie%20awards%20for%20entrepreneurs!%0D%0A%0D%0AMy%20top%20movies%20were%3A%0D%0A${stringNoSpaces}%0D%0ANominate%20your%20favorites%20at%20%20https%3A%2F%2Fcarolinesekel.github.io%2Fshopify-frontend-challenge-summer-2021%2F!`)
 }
 shareButton.addEventListener("click", shareNominations);
