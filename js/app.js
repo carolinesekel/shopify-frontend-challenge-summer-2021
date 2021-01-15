@@ -149,7 +149,9 @@ function shareNominations() {
     let nominations = [];
     nominationsList.childNodes.forEach((li) => {
         let movieDetails = li.childNodes[0].textContent;
-        nominations.push(movieDetails);
+        if (movieDetails) {
+            nominations.push(movieDetails);
+        }
     });
     console.log(nominations);
     //top 5 into string to insert into mailto link
