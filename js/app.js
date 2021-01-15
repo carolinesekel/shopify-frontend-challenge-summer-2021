@@ -19,7 +19,7 @@ function newSearch(searchTerm) {
     //update results label with new search term 
     resultsLabel.textContent = `Results for "${searchTerm}"`;
     //delete old list if there is one
-    resultsList.innerHTML = '';
+    resultsList.innerHTML = "";
     //fetch data based on search term 
     const finalUrl = url + searchTerm;
     fetch(finalUrl)
@@ -31,11 +31,11 @@ function newSearch(searchTerm) {
             //data.Search holds the list of movies, append list item for each movie
             data.Search.forEach((movie) => {
                 //list item for movie
-                const resultItem = document.createElement('li');
+                const resultItem = document.createElement("li");
                 const movieDetails = document.createTextNode(`${movie.Title} (${movie.Year}) `);
                 resultItem.appendChild(movieDetails);
                 //button to nominate
-                const nominateButton = document.createElement('button');
+                const nominateButton = document.createElement("button");
                 nominateButton.classList.add("nominate-button");
                 const buttonLabel = document.createTextNode("Nominate");
                 nominateButton.appendChild(buttonLabel);
@@ -57,7 +57,7 @@ searchButton.addEventListener("click", () => {
         newSearch(searchTerm);
     }
     //clear search box 
-    input.value = '';
+    input.value = "";
 })
 
 //event listener on enter key to submit also
@@ -71,17 +71,17 @@ document.addEventListener("keyup", (event) => {
             newSearch(searchTerm);
         }
         //clear search box 
-        input.value = '';
+        input.value = "";
     }
 })
 
 function nominate(movieDetails) {
     //list item
-    const nominationItem = document.createElement('li');
+    const nominationItem = document.createElement("li");
     const nominationDetails = document.createTextNode(movieDetails);
     nominationItem.appendChild(nominationDetails);
     //button to remove
-    const removeButton = document.createElement('button');
+    const removeButton = document.createElement("button");
     removeButton.classList.add("remove-button");
     const buttonLabel = document.createTextNode("Remove");
     removeButton.appendChild(buttonLabel);
@@ -141,8 +141,33 @@ function checkNumberOfNominations() {
     }
 }
 
-//send email with nominations and link to page
+//get nominations, format top 5 into string that can be inserted into mailto link
+//note to self: realizing this is not necessarily the top 5, but first 5 in the list (since my code lets you nominate more than 5)
 function shareNominations() {
+    //nominations
+    let nominations = [];
+    nominationsList.childNodes.forEach((li) => {
+        let movieDetails = li.childNodes[0].textContent;
+        nominations.push(movieDetails);
+    });
+    console.log(nominations);
+    //top 5 into string to insert into mailto link
+    let nominationsString = "";
+    for (let i = 0; i < 5; i++) {
+        nominationsString += `${nominations[i]}%0D%0A`
+    }
+    console.log(nominationsString);
+    //note to self: there is definitely a better way to do this
+    let stringNoSpaces = "";
+    for (let char of nominationsString) {
+        if (char == " ") {
+            stringNoSpaces += "%20";
+        } else {
+            stringNoSpaces += char;
+        }
+    }
+    console.log(stringNoSpaces);
     //mailto link 
-    //window.open('')
+    window.open(`mailto:?subject=Check%20out%20my%20nominations%20for%20the%20Shoppies!&body=I%20nominated%20my%20favorite%20movies%20for%20the%20Shoppies%3A%20Movie%20awards%20for%20entrepreneurs!%0D%0A%0D%0AMy%20top%205%20movies%20were%3A%0D%0A${stringNoSpaces}%0D%0ANominate%20your%20favorites%20at%20%20https%3A%2F%2Fcarolinesekel.github.io%2Fshopify-frontend-challenge-summer-2021%2F!`)
 }
+shareButton.addEventListener("click", shareNominations);
