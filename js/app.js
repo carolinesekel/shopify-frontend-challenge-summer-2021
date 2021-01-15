@@ -10,7 +10,7 @@ const searchButton = document.getElementById("searchSubmit");
 const input = document.getElementById("search");
 
 //list of current nominations
-let currentNominations = [];
+let numberOfNumonations = 0;
 
 function newSearch(searchTerm) {
     //update results label with new search term 
@@ -78,20 +78,6 @@ document.addEventListener("keyup", (event) => {
     }
 })
 
-resultsList.addEventListener("click", (event) => {
-    let elementClicked = event.target;
-    //check if clicked nominate button
-    //console.log(elementClicked.classList.value);
-    if (elementClicked.classList.value == "nominate-button") {
-        const movieDetails = `${elementClicked.parentElement.childNodes[0].textContent}`;
-        //console.log(movieDetails);
-        nominate(movieDetails);
-    }
-    //disable button after
-    elementClicked.setAttribute("disabled", true);
-})
-
-
 function nominate(movieDetails) {
     const nominationItem = document.createElement('li');
     const nominationDetails = document.createTextNode(movieDetails);
@@ -104,6 +90,10 @@ function nominate(movieDetails) {
     nominationItem.appendChild(removeButton);
     //add item to list
     nominationsList.appendChild(nominationItem);
+    //update numberOfNominations
+    numberOfNumonations += 1;
+    console.log(numberOfNumonations);
+    checkNumberOfNominations();
 }
 
 function removeNomination(nomination) {
@@ -116,15 +106,33 @@ function removeNomination(nomination) {
     //how to get back to resultsList to figure out which button to restore?
     //note to self: probably could have avoided this by keeping track of the movies a better way, maybe a list of objects?
     resultsList.childNodes.forEach((li) => {
-        //console.log(li.childNodes[0].textContent);
-        let movieDetails = li.childNodes[0].textContent;
-        if (movieDetails == nominationDetails) {
-            //console.log("this one");
-            //console.log(li.childNodes[1]);
-            li.childNodes[1].toggleAttribute("disabled");
-        }
-    })
+            //console.log(li.childNodes[0].textContent);
+            let movieDetails = li.childNodes[0].textContent;
+            if (movieDetails == nominationDetails) {
+                //console.log("this one");
+                //console.log(li.childNodes[1]);
+                li.childNodes[1].toggleAttribute("disabled");
+            }
+        })
+        //update numberOfNominations
+    numberOfNumonations -= 1;
+    console.log(numberOfNumonations);
+    checkNumberOfNominations();
 }
+resultsList.addEventListener("click", (event) => {
+    let elementClicked = event.target;
+    //check if clicked nominate button
+    //console.log(elementClicked.classList.value);
+    if (elementClicked.classList.value == "nominate-button") {
+        const movieDetails = `${elementClicked.parentElement.childNodes[0].textContent}`;
+        //console.log(movieDetails);
+        nominate(movieDetails);
+    }
+    //disable button after
+    elementClicked.setAttribute("disabled", true);
+
+})
+
 nominationsList.addEventListener("click", (event) => {
     let elementClicked = event.target;
     //check if clicked remove button
@@ -133,3 +141,11 @@ nominationsList.addEventListener("click", (event) => {
         removeNomination(elementClicked.parentNode);
     }
 })
+
+function checkNumberOfNominations() {
+    if (numberOfNumonations < 5 || numberOfNumonations > 5) {
+        document.body.classList.remove("full-nominations");
+    } else {
+        document.body.classList.add("full-nominations");
+    }
+}
