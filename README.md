@@ -28,7 +28,6 @@ I implemented the following "extras"
 * Vanilla JS
 
 ## Thoughts/Issues/Things to improve
-### HTTP vs HTTPS
 ### ES6 
 I used JS features from ES6 which may not work depending on the browser. A transpiler like [Babel](https://babeljs.io/) can be used to solve this.
 ### Separation of Concerns
