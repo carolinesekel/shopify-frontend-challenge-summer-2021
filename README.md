@@ -34,3 +34,5 @@ I used JS features from ES6 which may not work depending on the browser. A trans
 I belive my code can definitely be cleaned up and made more modular, there are places where I began to think separate functions could be made, etc. but I am leaving it as is because it is evidence of the way I was thinking while solving the problem. 
 ### 5+ nominations
 I did not implement restrictions for the user past 5 nominations, so although a banner appears when the user reaches 5 nominations, the buttons to nominate are not disabled. This can/should be fixed in the future.
+### Save nomination list on page reload and leaving page
+Use localStorage to save nominations list - function to load nominations from localStorage, and update using localStorage.setItem when adding or removing nominations, can also implement a clear button to remove all nominations at once and clear local storage
